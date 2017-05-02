@@ -23,6 +23,13 @@
     <sound>sound\sound13_level_up</sound>
     <sound>sound\snd_level_up</sound>
     <sound>sound\snd_squish1</sound>
+    <sound>sound\snd_playerstep</sound>
+    <sound>sound\snd_hardstep</sound>
+    <sound>sound\snd_step_light</sound>
+    <sound>sound\snd_heal</sound>
+    <sound>sound\snd_shotgun_reload</sound>
+    <sound>sound\snd_grenade_pin</sound>
+    <sound>sound\snd_bang</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_bloodsplatter</sprite>

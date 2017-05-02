@@ -69,7 +69,8 @@ if(path_exists(path)){
     path_delete(path);
 }
 
-if(irandom(global.luckiness) == global.luckiness){
+if(irandom(1) == 1){
+//if(irandom(global.luckiness) == global.luckiness){
     var drop = irandom(3);
     switch(drop){
         case 0: 
