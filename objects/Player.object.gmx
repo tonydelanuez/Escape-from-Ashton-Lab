@@ -206,29 +206,13 @@ global.fireRate = baseFire;
             <string>var light_color_1 = make_color_rgb(255, 110, 70);
 var light_color_2 = make_color_rgb(255, 138, 103);
 var light_color_3 = make_color_rgb(255, 153, 121);
-var draw_color = 0;
-switch(irandom_range(0,3)){
-    case 0: 
-        draw_color = light_color_1;
-        break;
-    case 1: 
-        draw_color = light_color_2; 
-        break; 
-    case 2: 
-        draw_color = light_color_3; 
-        break;
-    default:
-        draw_color = c_orange;
-        break;
-}
 
-
-
+//Drawing the circle of light around the player. 
 size = 300; 
 draw_set_blend_mode(bm_subtract);
 surface_set_target(light);
 
-draw_ellipse_color(x - size / 2 - view_xview, y - size/2 - view_yview, x+size /2 - view_xview, y + size / 2 - view_yview, draw_color, c_black, false);
+draw_ellipse_color(x - size / 2 - view_xview, y - size/2 - view_yview, x+size /2 - view_xview, y + size / 2 - view_yview, light_color_1, c_black, false);
 
 surface_reset_target();
 draw_set_blend_mode(bm_normal);
