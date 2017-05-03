@@ -5,8 +5,8 @@ option = argument[1];
 
 //Speed Bounds
 var min_spd = 2;
-var max_spd = 4.4;
-var speed_inc = 0.2;
+var max_spd = 3.6;
+var speed_inc = 0.1;
 //HP
 var min_str = 20;
 var max_str = 35;
@@ -35,6 +35,8 @@ switch(stat){
             PlayerStats.max_hp -= str_inc;
             PlayerStats.hp = PlayerStats.max_hp;
             PlayerStats.talents += 1;
+        } else {
+            return false;
         }
         break;
     case "crit":
@@ -44,6 +46,8 @@ switch(stat){
         } else if (option == "dec" && PlayerStats.crit_chance < min_crit) {
             PlayerStats.crit_chance += crit_inc;
             PlayerStats.talents += 1;
+        } else {
+            return false;
         }
         break;
     case "agility":
@@ -53,6 +57,8 @@ switch(stat){
         } else if (option == "dec" && PlayerStats.agility > min_spd) {
             PlayerStats.agility -= speed_inc;
             PlayerStats.talents += 1;
+        } else {
+            return false;
         }
         break;
     case "dext":
@@ -62,6 +68,8 @@ switch(stat){
         } else if (option == "dec" && PlayerStats.dexterity < min_dex) {
             PlayerStats.dexterity += dex_inc;
             PlayerStats.talents += 1;
+        } else {
+            return false;
         }
         break;
     case "aim":
@@ -71,6 +79,9 @@ switch(stat){
         } else if (option == "dec" && PlayerStats.aim < min_aim) {
             PlayerStats.aim += aim_inc;
             PlayerStats.talents += 1;
+        } else {
+            return false;
         }
         break;
 }     
+return true;

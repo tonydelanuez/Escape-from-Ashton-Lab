@@ -138,7 +138,7 @@ audio_play_sound(music_jasminas, 15, true);
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if (room == rm_menu) || (room == rm_talents){
+            <string>if (room == rm_menu) || (room == rm_talents &amp;&amp; (room != rm_death)){
     game_end();
 }
 </string>

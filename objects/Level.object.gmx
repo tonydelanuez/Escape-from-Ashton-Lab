@@ -27,6 +27,10 @@
             <kind>1</kind>
             <string>///Create the level 
 script_execute(scr_loadgame);
+//sanity check
+global.invincibility = false;
+blade_counter = 0;
+blade_threshold = 400;
 
 // Resize
 room_width = (CELL_WIDTH/16) * 720; 
@@ -77,8 +81,8 @@ var odds = 1;
 var x_dir = 0; 
 var y_dir = 0;
 
-for(var i = 0; i &lt; width; i++){
-    for(var j = 0; j &lt;height ; j++){
+for(var i = 0; i &lt; width -1; i++){
+    for(var j = 0; j &lt;height-1 ; j++){
         ds_grid_set(grid, i, j, FLOOR);
     }
 }
@@ -267,15 +271,31 @@ for (var yy = 0; yy &lt; height*2; yy++) {
             <kind>1</kind>
             <string>//Restart level if enemies = 0; 
 
-max_l = 44; 
-if (irandom(60) == 60){
-    instance_create(0, 0, Enemy);
-    instance_create(0, max_l, Enemy);
-    instance_create(max_l , 0, Enemy);
-    instance_create(max_l, max_l, Enemy);
-    global.enemies += 4;
+//Check if past X level before shurikens 
+blade_counter++;
 
+if(blade_counter &gt; (blade_threshold + irandom_range(-30, 150))){
+    if(irandom(1) == 1){
+        throw_blades("right");
+    } else {
+        throw_blades("left");
+    }
+    blade_counter = 0;
 }
+
+max_l = 44; 
+if (irandom(200) == 200 &amp;&amp; (global.enemies &lt; 15)){
+    if(irandom(2) == 1){
+     instance_create(0, 0, Enemy);
+     instance_create(max_l , 0, Enemy);
+            
+    } else {
+      instance_create(0, max_l, Enemy);
+      instance_create(max_l, max_l, Enemy);
+    }
+    global.enemies += 2;
+}
+
 if (global.enemies == 0){
     draw_text(Player.x, Player.y, "ROOM CLEARED! Continuing in " + string(theTimer));
     global.enemyspeed += 0.1;
@@ -314,6 +334,7 @@ if (global.enemies == 0){
 scr_savegame();
 ds_grid_destroy(grid);
 mp_grid_destroy(grid_path);
+instance_destroy();
 </string>
           </argument>
         </arguments>

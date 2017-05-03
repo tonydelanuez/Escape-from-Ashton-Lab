@@ -6,7 +6,7 @@ if(file_exists("Save.ini")){
     PlayerStats.talents = ini_read_real("Player", "Talents", 0);
     PlayerStats.crit_chance = ini_read_real("Player", "Crit_Chance", BASE_CRIT);
     PlayerStats.agility = ini_read_real("Player", "Agility", BASE_SPD);
-    PlayerStats.dexterity = ini_read_real("Player", "Dexterixty", BASE_DEX);
+    PlayerStats.dexterity = ini_read_real("Player", "Dexterity", BASE_DEX);
     PlayerStats.aim = ini_read_real("Player", "Aim", BASE_AIM);
     ini_close();
 } else { 

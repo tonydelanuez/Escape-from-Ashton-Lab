@@ -18,22 +18,27 @@
     <sound>sound\snd_bubble</sound>
     <sound>sound\snd_gunshot_old</sound>
     <sound>sound\snd_gunshot_menu</sound>
-    <sound>sound\snd_empty_clip</sound>
     <sound>sound\snd_gunshot</sound>
-    <sound>sound\snd_i_like_big_guns</sound>
+    <sound>sound\snd_danger</sound>
     <sound>sound\snd_explode</sound>
-    <sound>sound\sound13_level_up</sound>
+    <sound>sound\snd_menu_succ</sound>
     <sound>sound\snd_level_up</sound>
     <sound>sound\snd_squish1</sound>
     <sound>sound\snd_playerstep</sound>
     <sound>sound\snd_hardstep</sound>
     <sound>sound\snd_step_light</sound>
+    <sound>sound\snd_menu_fail</sound>
     <sound>sound\snd_heal</sound>
     <sound>sound\snd_shotgun_reload</sound>
     <sound>sound\snd_grenade_pin</sound>
     <sound>sound\snd_bang</sound>
+    <sound>sound\snd_levelup</sound>
+    <sound>sound\snd_blade</sound>
+    <sound>sound\snd_warning</sound>
+    <sound>sound\snd_gameover</sound>
   </sounds>
   <sprites name="sprites">
+    <sprite>sprites\spr_slime</sprite>
     <sprite>sprites\spr_bloodsplatter</sprite>
     <sprite>sprites\spr_target</sprite>
     <sprite>sprites\spr_bullet</sprite>
@@ -63,7 +68,13 @@
       <sprite>sprites\spr_small_btn_hov</sprite>
       <sprite>sprites\spr_small_btn</sprite>
     </sprites>
-    <sprite>sprites\spr_slime</sprite>
+    <sprites name="HUD">
+      <sprite>sprites\spr_hp_hud</sprite>
+      <sprite>sprites\spr_enemies_hud</sprite>
+      <sprite>sprites\spr_shotgun_hud</sprite>
+      <sprite>sprites\spr_grenade_hud</sprite>
+    </sprites>
+    <sprite>sprites\spr_blade</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -87,6 +98,8 @@
     <script>scripts\player_level_up.gml</script>
     <script>scripts\fireworks.gml</script>
     <script>scripts\sparks.gml</script>
+    <script>scripts\throw_blades.gml</script>
+    <script>scripts\draw_text_shadow.gml</script>
   </scripts>
   <fonts name="fonts">
     <font>fonts\fnt_small</font>
@@ -95,6 +108,7 @@
     <font>fonts\fnt_lessbig</font>
     <font>fonts\fnt_big</font>
     <font>fonts\fnt_title</font>
+    <font>fonts\fnt_bigtitle</font>
   </fonts>
   <objects name="objects">
     <object>objects\Player</object>
@@ -122,6 +136,7 @@
       <object>objects\Boss</object>
       <object>objects\Enemy</object>
       <object>objects\obj_abomination</object>
+      <object>objects\obj_blade</object>
     </objects>
     <objects name="Projectiles">
       <object>objects\obj_ebullet</object>
@@ -132,7 +147,6 @@
       <object>objects\obj_pwr_shotty</object>
       <object>objects\obj_pwr_grenade</object>
       <object>objects\obj_heal</object>
-      <object>objects\obj_pwr_time</object>
     </objects>
     <objects name="Shop">
       <object>objects\obj_shop</object>
@@ -148,11 +162,14 @@
     <objects name="Obstacles">
       <object>objects\obj_slime</object>
     </objects>
+    <objects name="Death Screen">
+      <object>objects\obj_death</object>
+    </objects>
   </objects>
   <rooms name="rooms">
     <room>rooms\rm_menu</room>
     <room>rooms\rm_one</room>
-    <room>rooms\rm_abomination</room>
+    <room>rooms\rm_death</room>
     <room>rooms\rm_story</room>
     <room>rooms\rm_talents</room>
     <room>rooms\rm_quit</room>
@@ -164,7 +181,7 @@
     <constant name="WALL">-6</constant>
     <constant name="VOID">-7</constant>
     <constant name="BASE_SPD">2</constant>
-    <constant name="BASE_HP">20</constant>
+    <constant name="BASE_HP">10</constant>
     <constant name="BASE_DEX">15</constant>
     <constant name="BASE_AIM">4</constant>
     <constant name="BASE_CRIT">25</constant>

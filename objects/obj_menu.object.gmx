@@ -67,7 +67,7 @@ audio_play_sound_on(menu_em, snd_gunshot_menu, false, 5);
         </arguments>
       </action>
     </event>
-    <event eventtype="8" enumb="0">
+    <event eventtype="8" enumb="64">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -85,25 +85,49 @@ audio_play_sound_on(menu_em, snd_gunshot_menu, false, 5);
           <argument>
             <kind>1</kind>
             <string>///Draw the menu
-
+var gui_w = display_get_gui_width();
+var gui_h = display_get_gui_height();
 
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle); 
 var write_color = make_color_rgb(255,152,0);
 draw_set_color(write_color);
 draw_set_font(fnt_title);
-draw_text(view_wview[0]/3 + 140, 100, "ESCAPE FROM ASHTON LAB");
+//draw_text(view_wview[0]/3 + 140, 100, "ESCAPE FROM ASHTON LAB");
+draw_text_shadow(gui_w/2, gui_h/10, "ESCAPE FROM ASHTON LAB", write_color, fnt_bigtitle);
 draw_set_font(fnt_small);
 
 //Controls (Move to its own menu)
 draw_set_font(fnt_small);
 draw_set_color(c_white);
-draw_text(view_wview[0]/3 + 150, 460, "Move: WASD");
-draw_text(view_wview[0]/3 + 150, 480, "Shoot: Left Click");
-draw_text(view_wview[0]/3 + 150, 500, "Click around and test your aim!");
-draw_set_halign(fa_left);
+//draw_text(view_wview[0]/3 + 150, 460, "Move: WASD");
+//draw_text(view_wview[0]/3 + 150, 480, "Shoot: Left Click");
+//draw_text(view_wview[0]/3 + 150, 500, "Click around and test your aim!");
+//draw_set_halign(fa_left);
 
 </string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="8" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string></string>
           </argument>
         </arguments>
       </action>

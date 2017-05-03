@@ -257,8 +257,45 @@ move(hspd, vspd);
 
 depth = -y;
 if (PlayerStats.hp &lt; 1) { 
-    game_restart();
+    global.invincible = false;
+    room_goto(rm_death);
+    instance_destroy();
 }
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_blade">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!global.invincible){
+    PlayerStats.hp = PlayerStats.hp - 1; 
+    global.invincible = true; 
+    alarm[3] = 10;
+    global.shake = 12;
+    audio_emitter_pitch(playera_em, 1);
+    audio_emitter_gain(playera_em, .3);
+    if(!audio_is_playing(snd_player_hurt)){
+        audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
+    }
+    image_blend = c_red;
+}
+
 </string>
           </argument>
         </arguments>
@@ -288,7 +325,9 @@ if (PlayerStats.hp &lt; 1) {
     global.shake = 8;
     audio_emitter_pitch(playera_em, 1);
     audio_emitter_gain(playera_em, .3);
-    audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
+    if(!audio_is_playing(snd_player_hurt)){
+        audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
+    }
     image_blend = c_red;
 }
 
@@ -440,14 +479,17 @@ with (other) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(!global.invincible){
+            <string>
+if(!global.invincible){
     PlayerStats.hp = PlayerStats.hp - 1; 
     global.invincible = true; 
-    alarm[3] = 10;
+    alarm[3] = 6;
     global.shake = 8;
     audio_emitter_pitch(playera_em, 1);
     audio_emitter_gain(playera_em, .3);
-    audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
+    if(!audio_is_playing(snd_player_hurt)){
+        audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
+    }
     image_blend = c_red;
 }
 
@@ -585,8 +627,9 @@ if(global.fireCounter &gt;= global.fireRate){
         bullet.speed = 10;
         bullet.direction = point_direction(x,y, mouse_x, mouse_y);
         bullet.image_angle = bullet.direction;
-    
+        global.shake = 10;
     } else { 
+        global.shake = 4;
         audio_emitter_pitch(playera_em, 1);
         audio_emitter_gain(playera_em, .3);
         audio_play_sound_on(playera_em, snd_gunshot, false, 5);
@@ -624,22 +667,23 @@ if(global.fireCounter &gt;= global.fireRate){
 draw_set_font(fnt_lessbig);
 
 pc = (PlayerStats.hp /PlayerStats.max_hp) * 100;
-draw_healthbar(16, 96, 230, 116, pc, c_black, c_red, c_lime, 0, true, true)
-draw_text_colour(16, 61, "Enemies remaining: " + string(global.enemies), c_white, c_white, c_white, c_white, .75);
-draw_text_colour(16, 26, "Kills: " + string(global.kills), c_white, c_white, c_white, c_white, .75);
+//draw_healthbar(16, 96, 230, 116, pc, c_black, c_red, c_lime, 0, true, true)
+//draw_text_colour(16, 61, "Enemies remaining: " + string(global.enemies), c_white, c_white, c_white, c_white, .75);
+//draw_text_colour(16, 26, "Kills: " + string(global.kills), c_white, c_white, c_white, c_white, .75);
 
 
-if(spray)
-{
-    draw_text_colour(16, 146, "Shotgun Timer: " + string(alarm[0]), c_white, c_white, c_white, c_white, .75);
-}
+//if(spray)
+//{
+//    draw_text_colour(16, 146, "Shotgun Timer: " + string(alarm[0]), c_white, c_white, c_white, c_white, .75);
+//}
 
-if(grenade)
-{
-    draw_text_colour(16, 190, "Grenade Timer: " + string(alarm[1]), c_white, c_white, c_white, c_white, .75);
-}
+//if(grenade)
+//{
+ //   draw_text_colour(16, 190, "Grenade Timer: " + string(alarm[1]), c_white, c_white, c_white, c_white, .75);
+//}
 
 //Debugging Tests
+draw_text_colour(800, 26, "Global Damage: " + string(global.damage), c_white, c_white, c_white, c_white, .75);
 //draw_text_colour(800, 26, "Max_HP: " + string(PlayerStats.max_hp), c_white, c_white, c_white, c_white, .75);
 //draw_text_colour(800, 56, "Kills: " + string(global.kills), c_white, c_white, c_white, c_white, .75);
 //draw_text_colour(800, 86, "Talents: " + string(PlayerStats.talents), c_white, c_white, c_white, c_white, .75);
@@ -647,6 +691,48 @@ if(grenade)
 //draw_text_colour(800, 146, "Agility: " + string(PlayerStats.agility), c_white, c_white, c_white, c_white, .75);
 //draw_text_colour(800, 176, "Dexterity: " + string(PlayerStats.dexterity), c_white, c_white, c_white, c_white, .75);
 //draw_text_colour(800, 206, "Aim: " + string(PlayerStats.aim), c_white, c_white, c_white, c_white, .75);
+
+var gui_height = display_get_gui_height();
+var gui_width = display_get_gui_width();
+var from_bottom = 50;
+var h_inc = 30;
+
+//Draw the styled UI with icons
+//First, draw the HP
+
+draw_sprite(spr_hp_hud, image_index, gui_width/15 - 20, gui_height - from_bottom);
+draw_text_colour(gui_width/15 + h_inc - 18, gui_height - from_bottom, string(floor(pc)), c_white, c_white, c_white, c_white, .7);
+h_inc += 100;
+
+//Draw the shotgun
+
+draw_sprite(spr_shotgun_hud, image_index, gui_width/15 + h_inc , gui_height - from_bottom);
+h_inc += 30;
+draw_text_colour(gui_width/15 + h_inc, gui_height - from_bottom, string(round(max(alarm[0]/10))),c_white, c_white, c_white, c_white, .7);
+
+//Draw the bombs
+h_inc += 100;
+draw_sprite(spr_grenade_hud, image_index, gui_width/15 + h_inc, gui_height - from_bottom);
+h_inc += 30;
+draw_text_colour(gui_width/15 +  h_inc, gui_height - from_bottom, string(round(max(0,alarm[1]/10))),c_white, c_white, c_white, c_white, .7);
+
+//Draw the enemies
+h_inc += 100;
+draw_sprite(spr_enemies_hud, image_index, gui_width/15 + h_inc, gui_height - from_bottom);
+h_inc += 30;
+draw_text_colour(gui_width/15 + h_inc, gui_height - from_bottom, string(global.enemies),c_white, c_white, c_white, c_white, .7);
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

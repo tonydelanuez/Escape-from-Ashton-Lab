@@ -140,9 +140,9 @@ if (room == rm_talents) {
     //Agility
     draw_text(room_width/2 - 120,100+ space * 4, "Speed: " + string(PlayerStats.agility)); 
     //Dexterity
-    draw_text(room_width/2 - 120,100+ space * 5, "Firing Rate: " + string(PlayerStats.dexterity)); 
+    draw_text(room_width/2 - 120,100+ space * 5, "Shots/Sec: " + string((100/PlayerStats.dexterity))); 
     //Aim
-    draw_text(room_width/2 - 120, 100+ space * 6, "Accuracy: " + string(PlayerStats.aim)); 
+    draw_text(room_width/2 - 120, 100+ space * 6, "Accuracy: " + string((100/PlayerStats.aim)) + " %"); 
   
 }
 </string>

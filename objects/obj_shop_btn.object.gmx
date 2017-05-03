@@ -101,7 +101,13 @@ sprite_index = spr_small_btn_hov;
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>scr_update_player_stats(stat,op);
+            <string>if(scr_update_player_stats(stat,op)){
+    audio_play_sound(snd_menu_succ, 0, false);
+    effect_create_above(ef_explosion, x, y, 1, c_white);
+    effect_create_above(ef_explosion, x, y, 1, c_orange);
+} else {
+    audio_play_sound(snd_menu_fail, 0, false);
+}
 </string>
           </argument>
         </arguments>
