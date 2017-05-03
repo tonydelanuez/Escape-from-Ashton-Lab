@@ -83,7 +83,10 @@ if(grid_place_meeting(x,y))
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>
+            <string>var bullet_type = obj_bullet;
+if(Player.piercing){
+    bullet_type = obj_piercing;
+}   
 
 with (other){
     var enemyinst = instance_position(x,y,Enemy);
@@ -103,7 +106,7 @@ with (other){
         }
     }
 for(var i = 0; i &lt; minis; i++){
-        bullet = instance_create(x,y,obj_bullet);
+        bullet = instance_create(x,y, bullet_type);
         bullet.speed = 15;
         bullet.direction = irandom(360);
         bullet.image_angle = bullet.direction;

@@ -28,9 +28,10 @@
             <string>///Create the level 
 script_execute(scr_loadgame);
 //sanity check
-global.invincibility = false;
+global.invincible = false;
 blade_counter = 0;
 blade_threshold = 400;
+fading = false;
 
 // Resize
 room_width = (CELL_WIDTH/16) * 720; 
@@ -65,8 +66,8 @@ var cy = height div 2;
 
 //Create the player
 player = instance_create(cx*CELL_WIDTH+CELL_WIDTH/2, cy*CELL_HEIGHT+CELL_HEIGHT/2, Player);
-obj_camera.x = player.x;
-obj_camera.y = player.y;
+//obj_camera.x = player.x;
+//obj_camera.y = player.y;
 
 
 // Give the controller a random direction
@@ -247,7 +248,11 @@ for (var yy = 0; yy &lt; height*2; yy++) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string></string>
+            <string>///End the room on clear wave
+global.invincible = false;
+room_restart();
+
+</string>
           </argument>
         </arguments>
       </action>
@@ -274,7 +279,7 @@ for (var yy = 0; yy &lt; height*2; yy++) {
 //Check if past X level before shurikens 
 blade_counter++;
 
-if(blade_counter &gt; (blade_threshold + irandom_range(-30, 150))){
+if((global.progression % 2 == 1)&amp;&amp; (blade_counter &gt; (blade_threshold + irandom_range(-30, 150)))){
     if(irandom(1) == 1){
         throw_blades("right");
     } else {
@@ -284,7 +289,7 @@ if(blade_counter &gt; (blade_threshold + irandom_range(-30, 150))){
 }
 
 max_l = 44; 
-if (irandom(200) == 200 &amp;&amp; (global.enemies &lt; 15)){
+if (irandom(200) == 200 &amp;&amp; (global.enemies &lt; 15) &amp;&amp; false){
     if(irandom(2) == 1){
      instance_create(0, 0, Enemy);
      instance_create(max_l , 0, Enemy);
@@ -296,7 +301,7 @@ if (irandom(200) == 200 &amp;&amp; (global.enemies &lt; 15)){
     global.enemies += 2;
 }
 
-if (global.enemies == 0){
+if (global.enemies == 0 &amp;&amp; !fading){
     draw_text(Player.x, Player.y, "ROOM CLEARED! Continuing in " + string(theTimer));
     global.enemyspeed += 0.1;
     global.boss += 1;
@@ -305,8 +310,14 @@ if (global.enemies == 0){
           //  global.enemyodds -= 1;
         //}
     global.enemyhp += irandom(1);
+    alarm[0] = 150;
+    instance_create(x,y,obj_newlevel);
+    audio_play_sound(snd_win, 1, false);
+    global.invincible = true;
+    fading = true;
     scr_savegame();
-    room_restart();
+    obj_fadeout.fade_out = true;
+    //room_restart();
 }
 </string>
           </argument>

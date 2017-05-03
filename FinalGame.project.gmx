@@ -8,8 +8,7 @@
   <sounds name="sound">
     <sounds name="Music">
       <sound>sound\music_memory</sound>
-      <sound>sound\music_jasminas</sound>
-      <sound>sound\music_moonlight</sound>
+      <sound>sound\music_loboloco</sound>
     </sounds>
     <sound>sound\snd_enemy_hurt</sound>
     <sound>sound\snd_player_hurt</sound>
@@ -36,12 +35,16 @@
     <sound>sound\snd_blade</sound>
     <sound>sound\snd_warning</sound>
     <sound>sound\snd_gameover</sound>
+    <sound>sound\snd_slice_pwr</sound>
+    <sound>sound\snd_laser</sound>
+    <sound>sound\snd_win</sound>
   </sounds>
   <sprites name="sprites">
     <sprite>sprites\spr_slime</sprite>
     <sprite>sprites\spr_bloodsplatter</sprite>
     <sprite>sprites\spr_target</sprite>
     <sprite>sprites\spr_bullet</sprite>
+    <sprite>sprites\spr_piercing</sprite>
     <sprite>sprites\spr_hit</sprite>
     <sprite>sprites\spr_grenade</sprite>
     <sprite>sprites\spr_bullethole</sprite>
@@ -71,10 +74,12 @@
     <sprites name="HUD">
       <sprite>sprites\spr_hp_hud</sprite>
       <sprite>sprites\spr_enemies_hud</sprite>
+      <sprite>sprites\spr_slice_hud</sprite>
       <sprite>sprites\spr_shotgun_hud</sprite>
       <sprite>sprites\spr_grenade_hud</sprite>
     </sprites>
     <sprite>sprites\spr_blade</sprite>
+    <sprite>sprites\spr_fade</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -82,6 +87,7 @@
     <background>background\bg_wall</background>
     <background>background\bg_walltiles</background>
     <background>background\background4</background>
+    <background>background\background5</background>
   </backgrounds>
   <paths name="paths"/>
   <scripts name="scripts">
@@ -131,6 +137,7 @@
       <object>objects\obj_level_up</object>
       <object>objects\obj_pause</object>
       <object>objects\obj_light_controller</object>
+      <object>objects\obj_fadeout</object>
     </objects>
     <objects name="Enemies">
       <object>objects\Boss</object>
@@ -141,11 +148,13 @@
     <objects name="Projectiles">
       <object>objects\obj_ebullet</object>
       <object>objects\obj_bullet</object>
+      <object>objects\obj_piercing</object>
       <object>objects\obj_grenade</object>
     </objects>
     <objects name="Powerups">
       <object>objects\obj_pwr_shotty</object>
       <object>objects\obj_pwr_grenade</object>
+      <object>objects\obj_pwr_pierce</object>
       <object>objects\obj_heal</object>
     </objects>
     <objects name="Shop">
@@ -155,9 +164,11 @@
     <objects name="Effects">
       <object>objects\obj_bloodsplatter</object>
       <object>objects\obj_draw_damage</object>
+      <object>objects\obj_newlevel</object>
     </objects>
     <objects name="Particles">
       <object>objects\obj_blood</object>
+      <object>objects\obj_zombie_bite</object>
     </objects>
     <objects name="Obstacles">
       <object>objects\obj_slime</object>

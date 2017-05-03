@@ -3,7 +3,7 @@
   <spriteName>&lt;undefined&gt;</spriteName>
   <solid>0</solid>
   <visible>-1</visible>
-  <depth>0</depth>
+  <depth>-9999</depth>
   <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
@@ -25,22 +25,31 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>/// Creating an array of menu items
+            <string>//Blood system
+particle_zblood_system = part_system_create();
+particle_zblood = part_type_create();
+part_type_shape(particle_zblood, pt_shape_disk);
+part_type_size(particle_zblood, 0.08, 0.20, -0.01, 0);
 
-menu[0] = "Start";
-//menu[1] = "Continue - Not Yet Finished"; 
-menu[1] = "Quit";
+part_type_color1(particle_zblood, c_green);
+part_type_alpha2(particle_zblood, 0.8, 0.2);
+part_type_speed(particle_zblood, 1, 3 ,0, 0);
+part_type_direction(particle_zblood, 0, 359, 0, 0);
+part_type_gravity(particle_zblood, 0.3, 270); 
+part_type_blend(particle_zblood, 1); 
+part_system_depth( particle_zblood_system, -y );
+part_type_life(particle_zblood, 15, 30);
 
-space = 64
-mpos = 0;
-menu_em = audio_emitter_create();
+particle_zblood_emitter = part_emitter_create(particle_zblood_system);
 
+part_emitter_region(particle_zblood_system, particle_zblood_emitter, x + 5, x - 5, y + 5, y - 5, 1, 1);
+part_emitter_burst(particle_zblood_system, particle_zblood_emitter, particle_zblood, 20);
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="53">
+    <event eventtype="7" enumb="5">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -57,54 +66,7 @@ menu_em = audio_emitter_create();
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>instance_create(mouse_x, mouse_y, obj_bullethole);
-
-audio_emitter_pitch(menu_em, 1);
-audio_emitter_gain(menu_em, .7);
-audio_play_sound_on(menu_em, snd_gunshot_menu, false, 5);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="8" enumb="64">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>///Draw the menu
-var gui_w = display_get_gui_width();
-var gui_h = display_get_gui_height();
-
-draw_set_halign(fa_center);
-draw_set_valign(fa_middle); 
-var write_color = make_color_rgb(255,152,0);
-draw_set_color(write_color);
-draw_set_font(fnt_title);
-//draw_text(view_wview[0]/3 + 140, 100, "ESCAPE FROM ASHTON LAB");
-draw_text_shadow(gui_w/2, gui_h/10, "ESCAPE FROM ASHTON LAB", write_color, fnt_bigtitle);
-draw_set_font(fnt_small);
-
-//Controls (Move to its own menu)
-draw_set_font(fnt_small);
-draw_set_color(c_white);
-//draw_text(view_wview[0]/3 + 150, 460, "Move: WASD");
-//draw_text(view_wview[0]/3 + 150, 480, "Shoot: Left Click");
-//draw_text(view_wview[0]/3 + 150, 500, "Click around and test your aim!");
-//draw_set_halign(fa_left);
-
+            <string>part_system_destroy(particle_zblood_system);
 </string>
           </argument>
         </arguments>

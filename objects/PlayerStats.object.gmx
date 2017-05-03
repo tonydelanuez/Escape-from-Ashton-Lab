@@ -87,10 +87,35 @@ scr_loadgame();
           <argument>
             <kind>1</kind>
             <string>//Check if player level up
-if(global.killcounter &gt;= 20)
+if(global.killcounter &gt;= 50)
 {
     player_level_up();
     global.killcounter = 0;
+}
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="7" enumb="4">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!audio_is_playing(music_loboloco)){
+    audio_play_sound(music_loboloco, 1, true);
 }
 </string>
           </argument>
@@ -115,7 +140,7 @@ if(global.killcounter &gt;= 20)
           <argument>
             <kind>1</kind>
             <string>
-audio_play_sound(music_jasminas, 15, true);
+audio_play_sound(music_loboloco, 15, true);
 </string>
           </argument>
         </arguments>

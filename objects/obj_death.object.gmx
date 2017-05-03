@@ -26,6 +26,9 @@
           <argument>
             <kind>1</kind>
             <string>global.invincibility = false;
+if(audio_is_playing(music_loboloco)){
+    audio_stop_sound(music_loboloco);
+}
 audio_play_sound(snd_gameover, 1, true);
 </string>
           </argument>
@@ -60,7 +63,7 @@ audio_play_sound(snd_gameover, 1, true);
         </arguments>
       </action>
     </event>
-    <event eventtype="5" enumb="1">
+    <event eventtype="5" enumb="32">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -87,7 +90,7 @@ audio_stop_sound(snd_gameover);
         </arguments>
       </action>
     </event>
-    <event eventtype="6" enumb="53">
+    <event eventtype="5" enumb="13">
       <action>
         <libid>1</libid>
         <id>603</id>

@@ -31,6 +31,7 @@ maxhp = 5;
 pc = 0;
 stepcounter = 15;
 steprate = 15;
+dead = false;
 //Player audio emitter
 playera_em = audio_emitter_create();
 
@@ -50,6 +51,32 @@ global.invincibility = false;
 
 level_flash = 0;
 MAX_LEVEL_FLASH = 0;
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="5">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>///End the room on death
+room_goto(rm_death);
+global.invincible = false;
+ instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -212,7 +239,7 @@ size = 300;
 draw_set_blend_mode(bm_subtract);
 surface_set_target(light);
 
-draw_ellipse_color(x - size / 2 - view_xview, y - size/2 - view_yview, x+size /2 - view_xview, y + size / 2 - view_yview, light_color_1, c_black, false);
+draw_ellipse_color(x - size / 2 - view_xview, y - size/2 - view_yview, x+size /2 - view_xview, y + size / 2 - view_yview, light_color_2, c_black, false);
 
 surface_reset_target();
 draw_set_blend_mode(bm_normal);
@@ -256,17 +283,23 @@ move(hspd, vspd);
 
 
 depth = -y;
-if (PlayerStats.hp &lt; 1) { 
-    global.invincible = false;
-    room_goto(rm_death);
-    instance_destroy();
+if (PlayerStats.hp &lt; 1 &amp;&amp; !dead) { 
+    PlayerStats.hp = 0;
+    global.invincible = true;
+    obj_fadeout.fade_out = true;
+    alarm[5] = 50;
+    dead = true;
+   
+}
+if(dead){
+    PlayerStats.hp = 0;
 }
 </string>
           </argument>
         </arguments>
       </action>
     </event>
-    <event eventtype="4" ename="obj_blade">
+    <event eventtype="4" ename="obj_pwr_pierce">
       <action>
         <libid>1</libid>
         <id>603</id>
@@ -283,19 +316,14 @@ if (PlayerStats.hp &lt; 1) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(!global.invincible){
-    PlayerStats.hp = PlayerStats.hp - 1; 
-    global.invincible = true; 
-    alarm[3] = 10;
-    global.shake = 12;
-    audio_emitter_pitch(playera_em, 1);
-    audio_emitter_gain(playera_em, .3);
-    if(!audio_is_playing(snd_player_hurt)){
-        audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
-    }
-    image_blend = c_red;
-}
+            <string>piercing = true; 
+alarm[2] = 3 * room_speed;
 
+effect_create_above(ef_ring,x,y,1,c_blue);
+audio_play_sound(snd_slice_pwr, 1, false);
+with (other) {
+    instance_destroy();
+}
 </string>
           </argument>
         </arguments>
@@ -318,7 +346,7 @@ if (PlayerStats.hp &lt; 1) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(!global.invincible){
+            <string>if(!global.invincible &amp;&amp; !dead){
     PlayerStats.hp = PlayerStats.hp - 1; 
     global.invincible = true; 
     alarm[3] = 10;
@@ -418,7 +446,7 @@ with (other) {
             <string>
 
 spray = true; 
-alarm[0] = 10 * room_speed;
+alarm[0] = 7* room_speed;
 audio_play_sound(snd_shotgun_reload, 1, false);
 effect_create_above(ef_ring, x, y, 1, c_red);
 global.fireRate = shotFire;
@@ -447,13 +475,49 @@ with (other) {
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(!global.invincible){
+            <string>if(!global.invincible &amp;&amp; !dead){
     PlayerStats.hp = PlayerStats.hp - 1; 
     global.invincible = true; 
     alarm[3] = 10;
     audio_emitter_pitch(playera_em, 1);
     audio_emitter_gain(playera_em, .3);
     audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
+    image_blend = c_red;
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="4" ename="obj_blade">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!global.invincible &amp;&amp; !dead){
+    PlayerStats.hp = PlayerStats.hp - 1; 
+    global.invincible = true; 
+    alarm[3] = 10;
+    global.shake = 12;
+    audio_emitter_pitch(playera_em, 1);
+    audio_emitter_gain(playera_em, .3);
+    
+    if(!audio_is_playing(snd_player_hurt)){
+        audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
+    }
     image_blend = c_red;
 }
 
@@ -480,13 +544,14 @@ with (other) {
           <argument>
             <kind>1</kind>
             <string>
-if(!global.invincible){
+if(!global.invincible &amp;&amp; !dead){
     PlayerStats.hp = PlayerStats.hp - 1; 
     global.invincible = true; 
     alarm[3] = 6;
     global.shake = 8;
     audio_emitter_pitch(playera_em, 1);
     audio_emitter_gain(playera_em, .3);
+    instance_create(x,y,obj_zombie_bite);
     if(!audio_is_playing(snd_player_hurt)){
         audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
     }
@@ -515,7 +580,7 @@ if(!global.invincible){
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(!global.invincible){
+            <string>if(!global.invincible &amp;&amp; !dead){
     PlayerStats.hp = PlayerStats.hp - 1; 
     global.invincible = true; 
     alarm[3] = 10;
@@ -571,7 +636,37 @@ if(global.fireCounter &gt;= global.fireRate){
         global.shake = 15;
         effect_create_above(ef_smoke,x,y, 0, c_gray);
 
-    } else if (spray) {
+    }else if (piercing &amp;&amp; spray) {
+        audio_emitter_pitch(playera_em, 1);
+        audio_emitter_gain(playera_em, .3);
+        audio_play_sound_on(playera_em, snd_shotgun, false, 5);
+        
+        bullet = instance_create(x,y,obj_piercing);
+        bullet.speed = 15;
+        bullet.direction = point_direction(x,y, mouse_x, mouse_y);
+        bullet.image_angle = bullet.direction;
+        
+        bullet2 = instance_create(x,y,obj_piercing);
+        bullet2.speed = 15;
+        bullet2.direction = point_direction(x,y, mouse_x, mouse_y) + 7;
+        bullet2.image_angle = bullet2.direction;
+        
+        bullet3 = instance_create(x,y,obj_piercing);
+        bullet3.speed = 15;
+        bullet3.direction = point_direction(x,y, mouse_x, mouse_y) - 7;
+        bullet3.image_angle = bullet3.direction;
+        global.shake = 15;
+    } else if (grenade &amp;&amp; piercing) { 
+        audio_emitter_pitch(playera_em, 1);
+        audio_emitter_gain(playera_em, .5);
+        audio_play_sound_on(playera_em, snd_grenade_launcher, false, 5);
+        bullet = instance_create(x,y,obj_grenade);
+        bullet.speed = 10;
+        bullet.direction = point_direction(x,y, mouse_x, mouse_y);
+        bullet.image_angle = bullet.direction;
+        global.shake = 10;
+        
+     } else if (spray) {
         audio_emitter_pitch(playera_em, 1);
         audio_emitter_gain(playera_em, .3);
         audio_play_sound_on(playera_em, snd_shotgun, false, 5);
@@ -593,27 +688,11 @@ if(global.fireCounter &gt;= global.fireRate){
         global.shake = 15;
         effect_create_above(ef_smoke,x,y, 0, c_gray);
 
-    } else if (piercing &amp;&amp; spray) {
+    }  else if (piercing) { 
         audio_emitter_pitch(playera_em, 1);
         audio_emitter_gain(playera_em, .3);
-        audio_play_sound_on(playera_em, snd_shotgun, false, 5);
-        
-        bullet = instance_create(x,y,obj_piercing);
-        bullet.speed = 15;
-        bullet.direction = point_direction(x,y, mouse_x, mouse_y);
-        bullet.image_angle = bullet.direction;
-        
-        bullet2 = instance_create(x,y,obj_piercing);
-        bullet2.speed = 15;
-        bullet2.direction = point_direction(x,y, mouse_x, mouse_y) + 7;
-        bullet2.image_angle = bullet2.direction;
-        
-        bullet3 = instance_create(x,y,obj_piercing);
-        bullet3.speed = 15;
-        bullet3.direction = point_direction(x,y, mouse_x, mouse_y) - 7;
-        bullet3.image_angle = bullet3.direction;
-    
-    } else if (piercing) { 
+        audio_play_sound_on(playera_em, snd_laser, false, 5);
+        global.shake = 4;
         bullet = instance_create(x,y,obj_piercing);
         bullet.speed = 15;
         bullet.direction = point_direction(x,y, mouse_x, mouse_y);
@@ -683,7 +762,7 @@ pc = (PlayerStats.hp /PlayerStats.max_hp) * 100;
 //}
 
 //Debugging Tests
-draw_text_colour(800, 26, "Global Damage: " + string(global.damage), c_white, c_white, c_white, c_white, .75);
+//draw_text_colour(800, 26, "Global Damage: " + string(global.damage), c_white, c_white, c_white, c_white, .75);
 //draw_text_colour(800, 26, "Max_HP: " + string(PlayerStats.max_hp), c_white, c_white, c_white, c_white, .75);
 //draw_text_colour(800, 56, "Kills: " + string(global.kills), c_white, c_white, c_white, c_white, .75);
 //draw_text_colour(800, 86, "Talents: " + string(PlayerStats.talents), c_white, c_white, c_white, c_white, .75);
@@ -700,6 +779,7 @@ var h_inc = 30;
 //Draw the styled UI with icons
 //First, draw the HP
 
+draw_set_halign(fa_left);
 draw_sprite(spr_hp_hud, image_index, gui_width/15 - 20, gui_height - from_bottom);
 draw_text_colour(gui_width/15 + h_inc - 18, gui_height - from_bottom, string(floor(pc)), c_white, c_white, c_white, c_white, .7);
 h_inc += 100;
@@ -715,6 +795,12 @@ h_inc += 100;
 draw_sprite(spr_grenade_hud, image_index, gui_width/15 + h_inc, gui_height - from_bottom);
 h_inc += 30;
 draw_text_colour(gui_width/15 +  h_inc, gui_height - from_bottom, string(round(max(0,alarm[1]/10))),c_white, c_white, c_white, c_white, .7);
+
+//Draw the piercing
+h_inc += 100;
+draw_sprite(spr_slice_hud, image_index, gui_width/15 + h_inc, gui_height - from_bottom);
+h_inc += 30;
+draw_text_colour(gui_width/15 + h_inc, gui_height - from_bottom, string(round(max(0,alarm[2]/10))),c_white, c_white, c_white, c_white, .7);
 
 //Draw the enemies
 h_inc += 100;

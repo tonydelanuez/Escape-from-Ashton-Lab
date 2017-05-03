@@ -70,9 +70,9 @@ if(path_exists(path)){
     path_delete(path);
 }
 
-if(irandom(10) == 1){
+if(irandom(3) == 1){
 //if(irandom(global.luckiness) == global.luckiness){
-    var drop = irandom(3);
+    var drop = irandom(5);
     switch(drop){
         case 0: 
             instance_create(x,y,obj_pwr_grenade);
@@ -81,11 +81,19 @@ if(irandom(10) == 1){
             instance_create(x,y,obj_heal);
             break;
         case 2:
-            instance_create(x,y,obj_slime);
-            break;
-        default:
             instance_create(x,y,obj_pwr_shotty);
             break;
+        case 3:
+            instance_create(x,y,obj_pwr_pierce);
+            break;  
+        default:
+             instance_create(x,y,obj_slime);
+            break;
+    }
+    
+} else {
+    if(irandom(1) == 1){
+        instance_create(x,y,obj_slime);
     }
 
 }

@@ -233,7 +233,7 @@ if(path_exists(path)){
             <kind>1</kind>
             <string>draw_self();
 var hpcalc = (hp/maxhp) * 100;
-draw_healthbar(x-8, y, x +8, y+6, hpcalc, c_black, c_red, c_green, 0, true, false);
+draw_healthbar(x-8, y - 20, x +8, y-18, hpcalc, c_black, c_red, c_green, 0, true, false);
 </string>
           </argument>
         </arguments>

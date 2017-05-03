@@ -4,7 +4,7 @@
   <solid>0</solid>
   <visible>-1</visible>
   <depth>0</depth>
-  <persistent>-1</persistent>
+  <persistent>0</persistent>
   <parentName>&lt;undefined&gt;</parentName>
   <maskName>&lt;undefined&gt;</maskName>
   <events>
@@ -25,7 +25,31 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>pause = 0;
+            <string>alarm[0] = 200;
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
+    <event eventtype="2" enumb="0">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>instance_destroy();
 </string>
           </argument>
         </arguments>
@@ -48,18 +72,8 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>if(pause)
-{
-    if(keyboard_check_released(ord('Q'))){
-        game_end();
-    } 
-    if(keyboard_check_released(ord('1'))){
-
-        room_goto(rm_menu);
-  
-        pause = 0;
-    }
-}
+            <string>depth = -y;
+image_alpha -= 0.01;
 </string>
           </argument>
         </arguments>
@@ -82,60 +96,11 @@
         <arguments>
           <argument>
             <kind>1</kind>
-            <string>var gui_h = display_get_gui_height();
-var gui_w = display_get_gui_width();
-
-
-if (pause)
-{
-    draw_set_color(c_black);
-    draw_rectangle(0,0,gui_w, gui_h, false);
-    draw_set_halign(fa_center);
-    draw_set_valign(fa_middle);
-    draw_set_font(fnt_lessbig);
-    draw_set_color(c_white);
-    //draw_text(view_wview, view_hview/2, "Game Paused.");
-    //draw_text(view_wview, view_hview , "ESC: Unpause");
-    //draw_text(view_wview, view_hview + 40, "Q: Quit Game");
-    //draw_text(view_wview, view_hview + 80, "1: Main Menu");
-    draw_text_shadow(gui_w/2, gui_h/2 - 200, "Game Paused!", c_white, fnt_lessbig);
-    draw_text_shadow(gui_w/2, gui_h/2 + 40, "ESC: Unpause", c_white, fnt_lessbig);
-    draw_text_shadow(gui_w/2, gui_h/2 + 90, "Q: Quit Game", c_white, fnt_lessbig);
-    draw_text_shadow(gui_w/2, gui_h/2 + 140, "1: Main Menu", c_white, fnt_lessbig);
-    }
-draw_set_halign(fa_left);
-</string>
-          </argument>
-        </arguments>
-      </action>
-    </event>
-    <event eventtype="9" enumb="27">
-      <action>
-        <libid>1</libid>
-        <id>603</id>
-        <kind>7</kind>
-        <userelative>0</userelative>
-        <isquestion>0</isquestion>
-        <useapplyto>-1</useapplyto>
-        <exetype>2</exetype>
-        <functionname></functionname>
-        <codestring></codestring>
-        <whoName>self</whoName>
-        <relative>0</relative>
-        <isnot>0</isnot>
-        <arguments>
-          <argument>
-            <kind>1</kind>
-            <string>if (!pause &amp;&amp; room != rm_menu &amp;&amp; room != rm_talents &amp;&amp; room != rm_death){
-    pause = 1; 
-    instance_deactivate_all(true);
-} 
-else {
-    pause = 0; 
-    instance_activate_all(); 
-} 
-
-
+            <string>gui_h = display_get_gui_height();
+gui_w = display_get_gui_width();
+draw_set_valign(fa_middle);
+draw_set_halign(fa_center);
+draw_text_shadow(gui_w/2, gui_h/2, "LEVEL CLEARED. INCREASING DIFFICULTY.", c_white, fnt_lessbig);
 </string>
           </argument>
         </arguments>
