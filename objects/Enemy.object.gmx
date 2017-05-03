@@ -79,6 +79,9 @@ if(irandom(1) == 1){
         case 1: 
             instance_create(x,y,obj_heal);
             break;
+        case 2:
+            instance_create(x,y,obj_slime);
+            break;
         default:
             instance_create(x,y,obj_pwr_shotty);
             break;

@@ -9,11 +9,13 @@
     <sounds name="Music">
       <sound>sound\music_memory</sound>
       <sound>sound\music_jasminas</sound>
+      <sound>sound\music_moonlight</sound>
     </sounds>
     <sound>sound\snd_enemy_hurt</sound>
     <sound>sound\snd_player_hurt</sound>
     <sound>sound\snd_shotgun</sound>
     <sound>sound\snd_grenade_launcher</sound>
+    <sound>sound\snd_bubble</sound>
     <sound>sound\snd_gunshot_old</sound>
     <sound>sound\snd_gunshot_menu</sound>
     <sound>sound\snd_empty_clip</sound>
@@ -61,6 +63,7 @@
       <sprite>sprites\spr_small_btn_hov</sprite>
       <sprite>sprites\spr_small_btn</sprite>
     </sprites>
+    <sprite>sprites\spr_slime</sprite>
   </sprites>
   <backgrounds name="background">
     <background>background\background0</background>
@@ -141,6 +144,9 @@
     </objects>
     <objects name="Particles">
       <object>objects\obj_blood</object>
+    </objects>
+    <objects name="Obstacles">
+      <object>objects\obj_slime</object>
     </objects>
   </objects>
   <rooms name="rooms">

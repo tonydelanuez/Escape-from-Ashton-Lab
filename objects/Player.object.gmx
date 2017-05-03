@@ -280,6 +280,39 @@ if (PlayerStats.hp &lt; 1) {
         </arguments>
       </action>
     </event>
+    <event eventtype="4" ename="obj_slime">
+      <action>
+        <libid>1</libid>
+        <id>603</id>
+        <kind>7</kind>
+        <userelative>0</userelative>
+        <isquestion>0</isquestion>
+        <useapplyto>-1</useapplyto>
+        <exetype>2</exetype>
+        <functionname></functionname>
+        <codestring></codestring>
+        <whoName>self</whoName>
+        <relative>0</relative>
+        <isnot>0</isnot>
+        <arguments>
+          <argument>
+            <kind>1</kind>
+            <string>if(!global.invincible){
+    PlayerStats.hp = PlayerStats.hp - 1; 
+    global.invincible = true; 
+    alarm[3] = 10;
+    global.shake = 8;
+    audio_emitter_pitch(playera_em, 1);
+    audio_emitter_gain(playera_em, .3);
+    audio_play_sound_on(playera_em, snd_player_hurt, false, 10);
+    image_blend = c_red;
+}
+
+</string>
+          </argument>
+        </arguments>
+      </action>
+    </event>
     <event eventtype="4" ename="obj_heal">
       <action>
         <libid>1</libid>

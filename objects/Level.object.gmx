@@ -73,27 +73,14 @@ var cdir = irandom(3);
 var odds = 1; 
 
 //Create the level using 1000 steps. 
-repeat (1000) {
-    //Place a floor tile at the current controller position using an accessor.
-    grid[# cx, cy] = FLOOR;
-    //alternate: ds_grid_set(grid, cx, cy, FLOOR);
-    //Randomize the direction of the controller. 
-    //irandom(1) == 1 gives 50% chance to complete action. 
-    if(irandom(odds) == odds) {
-        cdir = irandom(3);
+//Changed from tutorial to create our own levels. 
+var x_dir = 0; 
+var y_dir = 0;
+
+for(var i = 0; i &lt; width; i++){
+    for(var j = 0; j &lt;height ; j++){
+        ds_grid_set(grid, i, j, FLOOR);
     }
-    
-    //Move the controller
-    //Multiplying by 90 to change 0,1,2,3 to get an angle from 0-270. 180 left, 270 down, etc. 
-    var xdir = lengthdir_x(1, cdir*90);
-    var ydir = lengthdir_y(1, cdir*90);
-    cx += xdir; 
-    cy += ydir; 
-    
-    //Make sure to not move out of the grid. Clamp cx and cy. width - 2 to get to cell before wall. Gives 1px border around edge.
-    cx = clamp(cx, 1, width-2);
-    cy = clamp(cy, 1, height-2);
-    
 }
 
 //Add walls
@@ -280,6 +267,15 @@ for (var yy = 0; yy &lt; height*2; yy++) {
             <kind>1</kind>
             <string>//Restart level if enemies = 0; 
 
+max_l = 44; 
+if (irandom(60) == 60){
+    instance_create(0, 0, Enemy);
+    instance_create(0, max_l, Enemy);
+    instance_create(max_l , 0, Enemy);
+    instance_create(max_l, max_l, Enemy);
+    global.enemies += 4;
+
+}
 if (global.enemies == 0){
     draw_text(Player.x, Player.y, "ROOM CLEARED! Continuing in " + string(theTimer));
     global.enemyspeed += 0.1;
